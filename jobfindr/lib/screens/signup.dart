@@ -2,19 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jobfindr/screens/login.dart';
 import 'package:jobfindr/screens/resumedrop.dart';
-import 'package:jobfindr/screens/signup.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({ Key? key }) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUp> createState() => _SignUpState();
 }
-
 final _formKey = GlobalKey<FormState>();
 
-class _LoginScreenState extends State<LoginScreen> {
+
+
+
+class _SignUpState extends State<SignUp> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -35,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Padding(
                     padding: EdgeInsets.only(top: 50),
                     child: Text(
-                      'Login',
+                      'Sign Up',
                       style: GoogleFonts.nunito(
                           color: Colors.black,
                           fontSize: 50,
@@ -45,6 +48,44 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: TextFormField(
+                    controller: nameController,
+                    style:
+                        GoogleFonts.nunito(fontSize: 20, color: Colors.black),
+                    textCapitalization: TextCapitalization.words,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter name';
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        fillColor: Color(0xffffffff),
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 2.0),
+                        ),
+                        hintText: 'Name',
+                        prefixIcon: Icon(
+                          Icons.person_outline,
+                          color: Color(0xff000000),
+                        ),
+                        hintStyle: GoogleFonts.nunito(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Color(0xffC9C9C9))),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -141,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     child: Text(
-                      'Login',
+                      'Sign Up',
                       style: GoogleFonts.nunito(
                         color: Color(0xffffffff),
                         fontWeight: FontWeight.w800,
@@ -164,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Create new account?',
+                      'Already have an account?',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -174,10 +215,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.push(context,
                             MaterialPageRoute(
-                                builder: (context) => SignUp()));
+                                builder: (context) => LoginScreen()));
                         },
                         child: Text(
-                          'Sign Up',
+                          'Login',
                           style: TextStyle(
                               color: Colors.blue,
                               fontSize: 20,
