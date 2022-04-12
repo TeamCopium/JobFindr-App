@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-final _formKey = GlobalKey<FormState>();
+final _formKeyy = GlobalKey<FormState>();
 
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Color(0xffffffff),
         body: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: _formKeyy,
             child: Column(
               children: [
                 SizedBox(
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
+                      if (_formKeyy.currentState!.validate()) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
