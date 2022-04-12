@@ -15,8 +15,17 @@ class LoginScreen extends StatefulWidget {
 final _formKeyy = GlobalKey<FormState>();
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late bool passwordVisibility;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    passwordVisibility = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: TextFormField(
                     controller: passwordController,
+                    obscureText: !passwordVisibility,
                     style:
                         GoogleFonts.nunito(fontSize: 20, color: Colors.black),
                     textCapitalization: TextCapitalization.words,
@@ -120,6 +130,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           Icons.key,
                           color: Color(0xff000000),
                         ),
+                        suffixIcon: InkWell(
+                            onTap: () => setState(
+                                  () =>
+                                      passwordVisibility = !passwordVisibility,
+                                ),
+                            child: Icon(
+                              passwordVisibility
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: Colors.black,
+                              size: 22,
+                            )),
                         hintStyle: GoogleFonts.nunito(
                             fontWeight: FontWeight.w600,
                             fontSize: 20,
@@ -172,9 +194,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUp()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
                         },
                         child: Text(
                           'Sign Up',

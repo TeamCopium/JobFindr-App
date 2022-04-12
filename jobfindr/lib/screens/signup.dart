@@ -6,20 +6,27 @@ import 'package:jobfindr/screens/login.dart';
 import 'package:jobfindr/screens/resumedrop.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({ Key? key }) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
 }
+
 final _formKey = GlobalKey<FormState>();
 
-
-
-
 class _SignUpState extends State<SignUp> {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late bool passwordVisibility;
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    passwordVisibility = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +140,7 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: TextFormField(
                     controller: passwordController,
+                    obscureText: !passwordVisibility,
                     style:
                         GoogleFonts.nunito(fontSize: 20, color: Colors.black),
                     textCapitalization: TextCapitalization.words,
@@ -161,6 +169,18 @@ class _SignUpState extends State<SignUp> {
                           Icons.key,
                           color: Color(0xff000000),
                         ),
+                        suffixIcon: InkWell(
+                            onTap: () => setState(
+                                  () =>
+                                      passwordVisibility = !passwordVisibility,
+                                ),
+                            child: Icon(
+                              passwordVisibility
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: Colors.black,
+                              size: 22,
+                            )),
                         hintStyle: GoogleFonts.nunito(
                             fontWeight: FontWeight.w600,
                             fontSize: 20,
@@ -213,9 +233,10 @@ class _SignUpState extends State<SignUp> {
                     ),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
                         },
                         child: Text(
                           'Login',
