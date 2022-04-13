@@ -62,8 +62,6 @@ class _ResumeDropState extends State<ResumeDrop> {
                           setState(() {
                             pickedFile = result.files.first;
                           });
-                          //final path = 'files/${pickedFile!.name}';
-                          //final file = File(pickedFile!.path!);
                         },
                         iconSize: 80,
                         icon: Icon(
