@@ -15,16 +15,16 @@ class LoginScreen extends StatefulWidget {
 final _formKeyy = GlobalKey<FormState>();
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-  late bool passwordVisibility;
+  late TextEditingController emailControllerr;
+  late TextEditingController passwordControllerr;
+  late bool passworddVisibility;
 
   @override
   void initState() {
     super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    passwordVisibility = false;
+    emailControllerr = TextEditingController();
+    passwordControllerr = TextEditingController();
+    passworddVisibility = false;
   }
 
   @override
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: TextFormField(
-                    controller: emailController,
+                    controller: emailControllerr,
                     style:
                         GoogleFonts.nunito(fontSize: 20, color: Colors.black),
                     keyboardType: TextInputType.emailAddress,
@@ -100,8 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: TextFormField(
-                    controller: passwordController,
-                    obscureText: !passwordVisibility,
+                    controller: passwordControllerr,
+                    obscureText: !passworddVisibility,
                     style:
                         GoogleFonts.nunito(fontSize: 20, color: Colors.black),
                     textCapitalization: TextCapitalization.words,
@@ -133,10 +133,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         suffixIcon: InkWell(
                             onTap: () => setState(
                                   () =>
-                                      passwordVisibility = !passwordVisibility,
+                                      passworddVisibility = !passworddVisibility,
                                 ),
                             child: Icon(
-                              passwordVisibility
+                              passworddVisibility
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
                               color: Colors.black,
@@ -159,7 +159,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ResumeDrop()));
+                                builder: (context) => ResumeDrop(
+                                  
+                                )));
                       }
                     },
                     child: Text(

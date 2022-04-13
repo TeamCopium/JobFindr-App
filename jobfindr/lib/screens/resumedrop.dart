@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, prefer_const_literals_to_create_immutables
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:jobfindr/screens/jobs.dart';
+
 
 class ResumeDrop extends StatefulWidget {
   const ResumeDrop({Key? key}) : super(key: key);
@@ -17,6 +16,7 @@ class ResumeDrop extends StatefulWidget {
 }
 
 class _ResumeDropState extends State<ResumeDrop> {
+  PlatformFile? pickedFile;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,16 +54,16 @@ class _ResumeDropState extends State<ResumeDrop> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          final result = await FilePicker.platform.pickFiles();
+                          final result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['pdf','doc'],
+                          );
                           if (result == null) return;
-                          final file = result.files.first;
-                          print('Name: ${file.name}');
-                          print('Bytes: ${file.bytes}');
-                          print('Name: ${file.size}');
-                          print('Extension: ${file.extension}');
-                          print('Path: ${file.path}');
-                          await saveFilePermanently(file);
-                          print('Path: ${file.path}');
+                          setState(() {
+                            pickedFile = result.files.first;
+                          });
+                          //final path = 'files/${pickedFile!.name}';
+                          //final file = File(pickedFile!.path!);
                         },
                         iconSize: 80,
                         icon: Icon(
@@ -83,17 +83,53 @@ class _ResumeDropState extends State<ResumeDrop> {
                 ),
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            if (pickedFile != null)
+              Column(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 2),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          FaIcon(FontAwesomeIcons.solidFilePdf,
+                              size: 40, color: Colors.red[900]),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Text(
+                              pickedFile!.name,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  //buildProgress(),
+                ],
+              ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.12,
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
             ElevatedButton(
-              child: Text('Find Jobs!'),
-              onPressed: () {},
+              child: Text('Search'),
+              onPressed: () async{
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => JobPage()));
+              },
               style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
                   primary: Color(0xff000000),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                   textStyle:
                       TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
             ),
@@ -102,14 +138,28 @@ class _ResumeDropState extends State<ResumeDrop> {
       ),
     );
   }
-
-  Future<File> saveFilePermanently(PlatformFile file) async {
-    final appStorage = await getApplicationDocumentsDirectory();
-    final newFile = File('${appStorage.path}/ ${file.name}');
-    return File(file.path!).copy(newFile.path);
-  }
-
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path!);
-  }
+//   Widget buildProgress()=>StreamBuilder<TaskSnapshot>(stream: uploadTask?.snapshotEvents,builder: (context,snapshot){
+//     if(snapshot.hasData){
+//       final data = snapshot.data;
+//       double progress = data.bytesTransferred / data.totalBytes;
+//       return SizedBox(
+//         height: 20,
+// child: Stack(
+//   fit: StackFit.expand,
+//   children: [
+//     LinearProgressIndicator(
+//       value: progress,
+//       backgroundColor: Colors.red,
+//       color: Colors.white,
+//     ),
+//     Center(
+//       child: Text('${(100 * progress).roundToDouble()}%',
+//       style: TextStyle(color: Colors.white),),
+//     )
+//   ],
+// ),     );
+//     }else{
+//       return SizedBox();
+//     }
+//   },);
 }

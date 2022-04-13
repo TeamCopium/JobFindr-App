@@ -162,7 +162,7 @@ class _SignUpState extends State<SignUp> {
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2.0),
+                               BorderSide(color: Colors.black, width: 2.0),
                         ),
                         hintText: 'Password',
                         prefixIcon: Icon(

@@ -15,16 +15,19 @@ class FirstPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
+          SizedBox(
+            height: size.height*0.1,
+          ),
           Container(
-            width: size.width,
-            height: size.height * 0.38,
+            width: size.width-10,
+            height: size.height * 0.4,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/Rectangle 1.png'),
+                    image: AssetImage('assets/app_postings-opt.png'),
                     fit: BoxFit.fill)),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
+            height: size.height * 0.1,
           ),
           Align(
             alignment: Alignment.center,
@@ -67,7 +70,7 @@ class FirstPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: size.height * 0.17,
+            height: size.height * 0.1,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
